@@ -1,0 +1,7 @@
+../../../../PyCharm/Projects/Course_work_5_(14.03)/.idea
+venv
+__pycache__
+!/database.ini
+!/queries.sql
+!/docker-compose.yaml
+!/.gitignore
