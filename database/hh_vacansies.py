@@ -43,7 +43,7 @@ class HH_api_db:
         return vacancies_list
 
     def employers_to_db(self):
-        with psycopg2.connect(dbname='postgres', **params_db) as conn:
+        with psycopg2.connect(dbname='hh_db', **params_db) as conn:
             with conn.cursor() as cur:
                 for employer in self.employers_dict:
                     try:
@@ -54,7 +54,7 @@ class HH_api_db:
         conn.close()
 
     def vacancies_to_db(self):
-        with psycopg2.connect(dbname='postgres', **params_db) as conn:
+        with psycopg2.connect(dbname='hh_db', **params_db) as conn:
             with conn.cursor() as cur:
                 for vacancy in self.get_vacancies():
                     cur.execute(

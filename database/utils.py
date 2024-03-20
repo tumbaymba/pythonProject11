@@ -1,13 +1,15 @@
+from urllib.request import localhost
+
 import psycopg2
 
 
-def create_database(database_name, params):
+def create_database(database_name: str, params_db: dict):
 
-    conn = psycopg2.connect(dbname='postgres', **params)
+    conn = psycopg2.connect(dbname='hh_db', **params_db)
     conn.autocommit = True
     cur = conn.cursor()
     try:
-        cur.execute(f'DROP DATABASE {database_name}')
+        cur.execute(f'DROP DATABASE IF EXISTS {database_name}')
     except psycopg2.errors.InvalidCatalogName:
         print('База данных не существует')
     cur.execute(f'CREATE DATABASE {database_name}')
@@ -15,9 +17,9 @@ def create_database(database_name, params):
     conn.close()
 
 
-def create_table(params):
+def create_table(params_db):
 
-    conn = psycopg2.connect(dbname='postgres', **params)
+    conn = psycopg2.connect(dbname='hh_db', **params_db)
     with conn.cursor() as cur:
         try:
             cur.execute("""
