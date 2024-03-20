@@ -1,11 +1,10 @@
-from urllib.request import localhost
-
 import psycopg2
+from config import config
 
 
-def create_database(database_name: str, params_db: dict):
+def create_database(database_name, params):
 
-    conn = psycopg2.connect(dbname='hh_db', **params_db)
+    conn = psycopg2.connect(dbname='hh_db', **params)
     conn.autocommit = True
     cur = conn.cursor()
     try:
@@ -17,9 +16,9 @@ def create_database(database_name: str, params_db: dict):
     conn.close()
 
 
-def create_table(params_db):
+def create_table(params):
 
-    conn = psycopg2.connect(dbname='hh_db', **params_db)
+    conn = psycopg2.connect(dbname='hh_db', **params)
     with conn.cursor() as cur:
         try:
             cur.execute("""

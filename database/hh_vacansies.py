@@ -1,7 +1,7 @@
 import psycopg2
 import requests
 from config import config
-
+import os
 params_db = config()
 
 

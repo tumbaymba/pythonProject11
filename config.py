@@ -1,9 +1,10 @@
 from configparser import ConfigParser
+import codecs
 
 
 def config(filename="database.ini", section="postgresql"):
     parser = ConfigParser()
-    parser.read(filename)
+    parser.read(filename, encoding='utf-8')
     db = {}
     if parser.has_section(section):
         params = parser.items(section)
