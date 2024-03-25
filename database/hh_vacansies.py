@@ -1,8 +1,19 @@
 import psycopg2
 import requests
 from config import config
-import os
 params_db = config()
+
+
+def get_request(employer_id) -> dict:
+    params = {
+        "page": 1,
+        "per_page": 100,
+        "employer_id": employer_id,
+        "only_with_salary": True,
+        "area": 113,
+        "only_with_vacancies": True
+    }
+    return requests.get("https://api.hh.ru/vacancies/", params=params).json()['items']
 
 
 class HH_api_db:
@@ -17,21 +28,10 @@ class HH_api_db:
                       'Лукойл': '907345',
                       'АО ННК': '6025'}
 
-    def get_request(self, employer_id) -> dict:
-        params = {
-            "page": 1,
-            "per_page": 100,
-            "employer_id": employer_id,
-            "only_with_salary": True,
-            "area": 113,
-            "only_with_vacancies": True
-        }
-        return requests.get("https://api.hh.ru/vacancies/", params=params).json()['items']
-
     def get_vacancies(self):
         vacancies_list = []
         for employer in self.employers_dict:
-            emp_vacancies = self.get_request(self.employers_dict[employer])
+            emp_vacancies = get_request(self.employers_dict[employer])
             for vacancy in emp_vacancies:
                 if vacancy['salary']['from'] is None:
                     salary = 0
